@@ -1,0 +1,105 @@
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','000-00000');</script>
+<!-- End Google Tag Manager -->
+
+<!-- GTM DataLayer -->
+<script>
+(function() {
+  window.dataLayer = window.dataLayer || [];
+
+  // customer information 
+  const currentUser = {};
+  {% if customer %}
+    currentUser.id = {{ customer.id }};
+    currentUser.first_name = "{{ customer.first_name }}";
+    currentUser.last_name = "{{ customer.last_name }}";
+    currentUser.full_name = "{{ customer.name }}";
+    currentUser.email = "{{ customer.email }}";
+    currentUser.phone = "{{ customer.default_address.phone }}";
+
+    {% if customer.default_address %}
+      currentUser.address = {
+        address_summary: "{{ customer.default_address.summary }}",
+        address1: "{{ customer.default_address.address1 }}",
+        address2: "{{ customer.default_address.address2 }}",
+        city: "{{ customer.default_address.city }}",
+        street: "{{ customer.default_address.street }}",
+        zip_code: "{{ customer.default_address.zip }}",
+        company: "{{ customer.default_address.company }}",
+        country: "{{ customer.default_address.country.name }}",
+        province: "{{ customer.default_address.province }}"
+      };
+    {% endif %}
+  {% elsif checkout.customer %}
+    currentUser.id = {{ checkout.customer.id }};
+    currentUser.first_name = "{{ checkout.customer.first_name }}";
+    currentUser.last_name = "{{ checkout.customer.last_name }}";
+    currentUser.full_name = "{{ checkout.customer.name }}";
+    currentUser.email = "{{ checkout.customer.email }}";
+    currentUser.phone = "{{ checkout.customer.default_address.phone }}";
+
+    {% if checkout.billing_address %}
+      currentUser.address = {
+        address_summary: "{{ checkout.billing_address.summary }}",
+        address1: "{{ checkout.billing_address.address1 }}",
+        address2: "{{ checkout.billing_address.address2 }}",
+        city: "{{ checkout.billing_address.city }}",
+        street: "{{ checkout.billing_address.street }}",
+        zip_code: "{{ checkout.billing_address.zip }}",
+        company: "{{ checkout.billing_address.company }}",
+        country: "{{ checkout.billing_address.country.name }}",
+        province: "{{ checkout.billing_address.province }}"
+      };
+    {% endif %}
+  {% endif %}
+
+  dataLayer.push({
+    customer: currentUser
+  });
+
+
+  // purchase event
+  const couponCode = [];
+  {% for discount_application in order.discount_applications %}
+    couponCode.push('{{ discount_application.title }}')
+  {% endfor %}
+
+
+  dataLayer.push({ ecommerce: null });
+  dataLayer.push({
+    event: 'purchase',
+    ecommerce: {
+      'transaction_id': '{{ checkout.order_number | replace: '#', '' | default: checkout.id | replace: '#', '' }}',
+      'value': {{ checkout.total_price  | times: 0.01 }},
+      'tax': {{ checkout.tax_price | times: 0.01 }},
+      'shipping': {{ checkout.shipping_price | times: 0.01 }},
+      'discount': {{ checkout.discounts_amount | times: 0.01 }},
+      'currency': '{{ checkout.currency }}',
+      'coupon': couponCode.join(','),
+      'items': [
+        {% for line_item in line_items %}
+          {
+            'item_id': {{ line_item.product_id }},
+            'item_name': "{{ line_item.product.title }}",
+            {% if line_item.variant.title != "Default Title" %}
+              'item_variant': "{{ line_item.variant.title }}",
+            {% endif %}
+            'discount': {{ line_item.line_level_total_discount | times: 0.01 }},
+            'sku': '{{ line_item.sku }}',
+            'price': {{ line_item.final_price | times: 0.01 }},
+            'quantity': {{ line_item.quantity }},
+            'item_brand': '{{ line_item.vendor }}',
+            'item_category': '{{ line_item.product.type }}'
+          },
+        {% endfor %}
+      ]
+    }
+  });
+
+})();
+</script>
+<!-- END GTM DataLayer -->
