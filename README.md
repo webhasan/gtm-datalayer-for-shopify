@@ -1,4 +1,4 @@
-# GTM data Layer for Shopify ecommerce
+# GTM Data Layer for Shopify ecommerce
 ## How to use: 
 1. Go to theme edit and paste GTM tracking code right after `<head>` tag in `theme.liquid` file
 2. Inside the `snippets` folder create a new file name `gtm-datalayer.liquid` file. Copy all of the code from `gtm-datalayer.liquid` code from this repository.
