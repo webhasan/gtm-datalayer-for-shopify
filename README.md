@@ -15,9 +15,9 @@
 ## Features ##
 With all general event tracking it also tracks following special events 
 1. Quick View Event Tracking (as **view_item**)
-2. Mini Cart and Popup Up Cart Tracking (as **view_cart**)
+2. Mini Cart and Dropdown Cart, Cart Drawer Tracking (as **view_cart**)
 3. Shopify Direct Checkout Tracking ( as **add_to_cart** & **begin_checkout**)
-4. Cart Drawer and Sticky Cart, Sidebar Cart etc Tracaking ( as **add_to_cart**)
+4. Sticky Cart, Sidebar Cart etc Tracaking ( as **add_to_cart**)
 5. Event was tacked by **Ajax Response** so not data discrepancy for edge cases
 6. No **jQuery**, no **3rd Party Scripet** was included, all code was written ES6 Object Oriented Way. Added proper error handling so that there is not JS error
 
