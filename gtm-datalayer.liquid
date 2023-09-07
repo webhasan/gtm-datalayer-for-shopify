@@ -28,15 +28,15 @@
         this.isAjaxCartIncrementDecrement = true;
 
         this.addToWishListSelectors = {
-          'addWishListIcon': '#wishlist-icon.heart',
-          'gridItemSelector': '#facet-main > product-list > div > product-item',
-          'productLinkSelector': 'a.product-item__aspect-ratio'
+          'addWishListIcon': '',
+          'gridItemSelector': '',
+          'productLinkSelector': ''
         }
 
         this.quickViewSelector = {
-          'quickViewElement': '#mini-cart > div > cart-drawer-recommendations > div > div > div > div > product-item:nth-child(1) > div.product-item__info.text--small > div.product-item__cta-wrapper > button.product-item__link.link.text--subdued.hidden-phone',
-          'gridItemSelector': '.product-item',
-          'productLinkSelector': 'a.product-item__aspect-ratio'
+          'quickViewElement': '',
+          'gridItemSelector': '',
+          'productLinkSelector': ''
         }
         this.cart = {{ cart | json }}
         this.collectData();          
