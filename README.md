@@ -19,7 +19,7 @@ With all general event tracking it also tracks following special events
 3. Shopify Direct Checkout Tracking ( as **add_to_cart** & **begin_checkout**)
 4. Cart Drawer and Sticky Cart, Sidebar Cart etc Tracaking ( as **add_to_cart**)
 5. Event was tacked by **Ajax Response** so not data discrepancy for edge cases
-6. No **jQuery**, no **3rd Party Scripet** was included, all code was written ES6 Object Oriented Way. Added proper error handling so that there is not JS error happening run time.
+6. No **jQuery**, no **3rd Party Scripet** was included, all code was written ES6 Object Oriented Way. Added proper error handling so that there is not JS error
 
 ## How to use: 
 1. Go to theme edit and paste GTM tracking code right after `<head>` tag in `theme.liquid` file
