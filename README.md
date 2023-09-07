@@ -10,8 +10,8 @@
 8. **newsletter_signup**
 9. Logged customer and in the checkout page customer details included as **customer** object with dataLayer
 
-## Special Features ##
-With all general event tracking it also tack following special events 
+## Features ##
+With all general event tracking it also tracks following special events 
 1. Quick View Event Tracking (as **view_item**)
 2. Mini Cart and Popup Up Cart Tracking (as **view_cart**)
 3. Shopify Direct Checkout Tracking ( as **add_to_cart** & **begin_checkout**)
