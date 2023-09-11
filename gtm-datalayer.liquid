@@ -197,8 +197,6 @@
 
           //if cart quantity chagne reload page 
           if(!this.isAjaxCartIncrementDecrement) {
-            console.log('I am inc');
-            
             const self = this;
             document.addEventListener('pointerdown', (event) => {
               const target = event.target.closest('a[href*="/cart/change?"]');
