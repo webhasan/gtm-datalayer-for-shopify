@@ -201,7 +201,6 @@
             document.addEventListener('pointerdown', (event) => {
               const target = event.target.closest('a[href*="/cart/change?"]');
               if(target) {
-                console.log(target);
                 const linkUrl = target.getAttribute('href');
                 const queryString = linkUrl.split("?")[1];
                 const urlParams = new URLSearchParams(queryString);
