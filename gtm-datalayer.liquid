@@ -593,8 +593,8 @@
         document.addEventListener('click', function(event) {
           let target = event.target.closest('form[action^="/contact"] button[type="submit"]');
           let targetForm = event.target.closest('form[action^="/contact"]');
-        
           if(target && targetForm) {
+            let email = targetForm.querySelector('input[type="email"]').value;
             let formType = targetForm.querySelector('input[name="contact[tags]"]');
             if(formType && formType.value === 'newsletter') {
               let form_location = window.location.href;
@@ -603,6 +603,7 @@
         
               dataLayer.push({
                 event: 'newsletter_signup',
+                email: email,
                 form_location,
                 form_id,
                 form_classes
