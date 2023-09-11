@@ -259,7 +259,7 @@
 
           if(this.shopifyDeirectPaymentButtonLink.length) {
               let self = this;
-              document.addEventListener('mouseover', (event) => {
+              document.addEventListener('pointerdown', (event) => {
                   
                 
                 let target = event.target;
@@ -444,7 +444,7 @@
             {% unless template contains 'product' %}
               if(this.shopifyDeirectPaymentButtonLink.length) {
                 let self = this;
-                document.addEventListener('mouseover', (event) => {
+                document.addEventListener('pointerdown', (event) => {
                   let target = event.target;
                   let checkoutButton = event.target.closest(this.shopifyDeirectPaymentButtonLink.join(', '));
                   
