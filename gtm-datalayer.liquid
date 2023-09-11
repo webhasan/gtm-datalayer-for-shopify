@@ -230,11 +230,6 @@
 
         productSinglePage() {
         {% if template contains 'product' %}
-
-          {% if product.recommended_products.size > 0 %}
-            console.log('Recommended products avilable');
-          {% endif %} 
-          
           const item = {
               product_id: {{product.id | json}},
               product_title: {{product.title | json}},
