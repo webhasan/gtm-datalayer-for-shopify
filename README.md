@@ -6,11 +6,12 @@
 4. **remove_from_cart**
 5. **view_cart**
 6. **begin_checkout**
-7. **purchase**
-8. **newsletter_signup**
-9. Logged customer and in the checkout page customer details included as **customer** object with dataLayer
-10. **Event Paramiters:** currency, value, transaction_id, coupon, shipping, vat, items, item_list_name, item_list_id
-11. **Items Paramiters** item_id, item_name, quantity, price, discount, item_brand, item_category, item_variant, sku, item_list_name, item_list_id
+7. **add_to_wishlist**
+8. **purchase**
+9. **newsletter_signup**
+10. Logged customer and in the checkout page customer details included as **customer** object with dataLayer
+11. **Event Paramiters:** currency, value, transaction_id, coupon, shipping, vat, items, item_list_name, item_list_id
+12. **Items Paramiters** item_id, item_name, quantity, price, discount, item_brand, item_category, item_variant, sku, item_list_name, item_list_id
 
 ## Features ##
 With all general event tracking it also tracks following special events 
