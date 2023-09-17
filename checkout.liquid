@@ -64,7 +64,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   // purchase event
   const couponCode = [];
-  {% for discount_application in order.discount_applications %}
+  {% for discount_application in discount_applications %}
     couponCode.push('{{ discount_application.title }}')
   {% endfor %}
 
