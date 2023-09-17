@@ -86,7 +86,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {% for line_item in line_items %}
           {
             'item_id': formatedItemId ? "shopify_AU_{{ line_item.product_id }}_{{ line_item.variant.id }}" : "{{ line_item.product_id }}",
-            'variant_id': "{{ line_item.variant.id }}"
+            'variant_id': "{{ line_item.variant.id }}",
             'item_name': "{{ line_item.product.title }}",
             {% if line_item.variant.title != "Default Title" %}
               'item_variant': "{{ line_item.variant.title }}",
