@@ -41,7 +41,7 @@
             'productLinkSelector': ''
           }
           this.cart = {{ cart | json }}
-          this.countryCode = {{ shop.address.country_code | json }};
+          this.countryCode = "{{ shop.address.country_code }}";
           this.collectData();          
         }
 
