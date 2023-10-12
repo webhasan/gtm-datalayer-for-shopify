@@ -1,7 +1,7 @@
 # Ultimate GTM Data Layer for Shopify ecommerce
 Whatsapp Group For Quick Support: 
 
-<img src="images/whatsapp.png" width="150"/>(https://chat.whatsapp.com/CYI4WpjjckA2CsTrw7IlIB)
+<a href="https://chat.whatsapp.com/CYI4WpjjckA2CsTrw7IlIB" target="_blank"><img src="images/whatsapp.png" width="150"/></a>
 
 ## How to use: 
 1. Go to theme edit and paste GTM tracking code right after `<head>` tag in `theme.liquid` file
