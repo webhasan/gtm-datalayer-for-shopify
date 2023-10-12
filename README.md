@@ -10,7 +10,7 @@ Whatsapp Group For Quick Support:
 4. From shopify admin dashboard go to **Settings >> Checkout (Scroll Down) >> Additional scripts**. Copy all code from `checkout.liquid` from this repository to  `Additional scripts` field. Change the example GTM example tracking id **000-00000** to real GTM ID
 5. Depending on your Shopify theme, you might have to make some adjustments. For more information, please refer to the video below.
 
-<img src="images/play-png.png" width="100"/>(https://youtu.be/WBjmUXQ9dIs )
+<a href="https://youtu.be/WBjmUXQ9dIs" target="_blank"><img src="images/play-png.png" width="100"/></a>
 ### 
 
 
