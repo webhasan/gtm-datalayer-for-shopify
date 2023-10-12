@@ -1,6 +1,7 @@
 # Ultimate GTM Data Layer for Shopify ecommerce
 Whatsapp Group For Quick Support: 
-[![Whatsapp Support Group](images/whatsapp.png)](https://chat.whatsapp.com/CYI4WpjjckA2CsTrw7IlIB)
+
+<img src="images/whatsapp.png" width="150"/>(https://chat.whatsapp.com/CYI4WpjjckA2CsTrw7IlIB)
 
 ## How to use: 
 1. Go to theme edit and paste GTM tracking code right after `<head>` tag in `theme.liquid` file
@@ -8,7 +9,8 @@ Whatsapp Group For Quick Support:
 3. In the `theme.liquid` file after your gtm tracking code include `ultimate-datalayer.liquid` file as `{% include 'ultimate-datalayer' %}`
 4. From shopify admin dashboard go to **Settings >> Checkout (Scroll Down) >> Additional scripts**. Copy all code from `checkout.liquid` from this repository to  `Additional scripts` field. Change the example GTM example tracking id **000-00000** to real GTM ID
 5. Depending on your Shopify theme, you might have to make some adjustments. For more information, please refer to the video below.
-[![How to use video](images/play-png.png)](https://youtu.be/WBjmUXQ9dIs )
+
+<img src="images/play-png.png" width="100"/>(https://youtu.be/WBjmUXQ9dIs )
 ### 
 
 
