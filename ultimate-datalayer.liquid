@@ -3,23 +3,29 @@
   * Author: Md Hasanuzzamna
   * Email: webhasan24@gmail.com
   * Linkedin: https://linkedin.com/md-h
-  * Website: https://leocoder.com
-  * Version: 1.1.0
-  * Last Update: 17 Sep 2023
+  * Version: 1.5.0
+  * Last Update: 12 Oct 2023
   */
   
   (function() {
-      class GTM_DataLayer {
+      class Ultimate_GTM_DataLayer {
         constructor() {
           window.dataLayer = window.dataLayer || []; 
+          
+          this.eventPrefix = '';
           this.formattedItemId = true; 
 
+          // settings for min cart
           this.miniCartButtonSelector = [
-            // 'a[href="/cart"]', 
+            'a[href="/cart"]', 
           ];
+          this.miniCartAppersOn = 'click';
 
+
+          // settings for begin checkout
           this.beginCheckoutbuttons = [
             'button[name="checkout"]',
+            'a[href="/checkout"]',
             '.additional-checkout-buttons',
           ];
 
@@ -27,22 +33,31 @@
             '.shopify-payment-button'
           ]
 
-          this.isAjaxCartIncrementDecrement = true;
-
+          // settings for add to wishlist
           this.addToWishListSelectors = {
             'addWishListIcon': '',
             'gridItemSelector': '',
-            'productLinkSelector': ''
+            'productLinkSelector': 'a[href*="/products/"]'
           }
 
+          // settings for quick view
           this.quickViewSelector = {
             'quickViewElement': '',
             'gridItemSelector': '',
-            'productLinkSelector': ''
+            'productLinkSelector': 'a[href*="/products/"]'
           }
+
+          // if add to cart redirect to cart page keep the value true
+          this.isAddToCartRedirect = true;
+          
+          // if cart item increment, decrement reload page keep it false
+          this.isAjaxCartIncrementDecrement = true;
+          
+
+          // Caution: Do not modify anything below this line, as it may result in it not functioning correctly.
           this.cart = {{ cart | json }}
           this.countryCode = "{{ shop.address.country_code }}";
-          this.collectData();          
+          this.collectData();  
         }
 
         updateCart() {
@@ -53,9 +68,27 @@
           });
         }
 
+       debounce(delay) {         
+          let timeoutId;
+          return function(func) {
+            console.log('on-clean', timeoutId);
+            const context = this;
+            const args = arguments;
+            
+            clearTimeout(timeoutId);
+            
+            timeoutId = setTimeout(function() {
+              func.apply(context, args);
+            }, delay);
+
+            console.log('new set', timeoutId);
+          };
+        }
+
         collectData() { 
             this.customerData();
             this.ajaxRequestData();
+            this.searchPageData();
             this.miniCartData();
             this.beginCheckoutData();
   
@@ -73,8 +106,10 @@
             
             this.addToWishListData();
             this.quickViewData();
-            this.newsletterSignupData();
-        }
+            this.formData();
+            this.phoneClickData();
+            this.emailClickData();
+        }        
 
         //logged in customer data 
         customerData() {
@@ -108,25 +143,65 @@
             })
         }
 
-        // add_to_cart, remove_from_cart
+        // add_to_cart, remove_from_cart, search
         ajaxRequestData() {
           const self = this;
+          
+          // handle non-ajax add to cart
+          if(this.isAddToCartRedirect) {
+            document.addEventListener('submit', function(event) {
+              const addToCartForm = event.target.closest('form[action="/cart/add"]');
+              if(addToCartForm) {
+                event.preventDefault();
+                
+                const formData = new FormData(addToCartForm);
+            
+                fetch(window.Shopify.routes.root + 'cart/add.js', {
+                  method: 'POST',
+                  body: formData
+                })
+                .then(response => {
+                    window.location.href = "{{ routes.cart_url }}";
+                })
+                .catch((error) => {
+                  console.error('Error:', error);
+                });
+              }
+            });
+          }
+          
+          // fetch
           let originalFetch = window.fetch;
+          let debounce = this.debounce(1000);
           
           window.fetch = function () {
             return originalFetch.apply(this, arguments).then((response) => {
               if (response.ok) {
                 let cloneResponse = response.clone();
- 
-                // add to cart
-                if (arguments[0].includes("/cart/add.js") || arguments[0].includes("/cart/add")) {
+                let requestURL = arguments[0];
+                
+                if(/.*\/search\/?.*\?q=.+/.test(requestURL)) {   
+                  const queryString = requestURL.split('?')[1];
+                  const urlParams = new URLSearchParams(queryString);
+                  const search_term = urlParams.get("q");
+
+                  debounce(function() {
+                   dataLayer.push({
+                     event: 'search', 
+                     search_term
+                   })
+                  });
+                }
+                else if (requestURL.includes("/cart/add")) {
                   cloneResponse.text().then((text) => {
                     let item = JSON.parse(text);
                     self.singleCartItemDataLayer('add_to_cart', item);
                     self.updateCart();
                   });
-                }else if(arguments[0].includes("/cart/change")) {
+                }else if(requestURL.includes("/cart/change")) {
+                  
                    cloneResponse.text().then((text) => {
+                     
                     let newCart = JSON.parse(text);
                     let newCartItems = newCart.items;
                     let oldCartItems = self.cart.items;
@@ -159,11 +234,110 @@
                         self.updateCart(); 
                       }
                     }
+                     
                   });
                 }
               }
               return response;
             });
+          }
+          // end fetch 
+
+
+          //xhr
+          var origXMLHttpRequest = XMLHttpRequest;
+          XMLHttpRequest = function() {
+            var requestURL;
+    
+            var xhr = new origXMLHttpRequest();
+            var origOpen = xhr.open;
+            var origSend = xhr.send;
+            
+    
+    
+            // Override the `open` function.
+            xhr.open = function(method, url) {
+                requestURL = url;
+                return origOpen.apply(this, arguments);
+            };
+    
+    
+            xhr.send = function() {
+    
+                // Only proceed if the request URL matches what we're looking for.
+                if (requestURL.includes("/cart/add") || requestURL.includes("/cart/change")) {
+        
+                    xhr.addEventListener('load', function() {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status >= 200 && xhr.status < 400) { 
+
+                               if(requestURL.includes("/cart/add")) {
+                                 
+                                   const item = JSON.parse(xhr.responseText);
+                                   self.singleCartItemDataLayer('add_to_cart', item);
+                                   self.updateCart();
+                                 
+                               }else if(requestURL.includes("/cart/change")) {
+                                 
+                                  const newCart = JSON.parse(xhr.responseText);
+                                  const newCartItems = newCart.items;
+                                  let oldCartItems = self.cart.items;
+              
+                                  for(let i = 0; i < oldCartItems.length; i++) {
+                                    let item = oldCartItems[i];
+                                    let newItem = newCartItems.find(newItems => newItems.id === item.id);
+              
+              
+                                    if(newItem) {
+                                      if(newItem.quantity > item.quantity) {
+                                        // cart item increment
+                                        let quantity = (newItem.quantity - item.quantity);
+                                        let updatedItem = {...item, quantity}
+                                        self.singleCartItemDataLayer('add_to_cart', updatedItem);
+                                        self.updateCart(); 
+              
+                                      }else if(newItem.quantity < item.quantity) {
+                                        // cart item decrement
+                                        let quantity = (item.quantity - newItem.quantity);
+                                        let updatedItem = {...item, quantity}
+                                        self.singleCartItemDataLayer('remove_from_cart', updatedItem);
+                                        self.updateCart(); 
+                                      }
+                                      
+              
+                                    }else {
+                                      self.singleCartItemDataLayer('remove_from_cart', item);
+                                      self.updateCart(); 
+                                    }
+                                  }
+                               }          
+                            }
+                        }
+                    });
+                }
+    
+                return origSend.apply(this, arguments);
+            };
+    
+            return xhr;
+          }; 
+          //end xhr
+        }
+
+        // search event from search page
+        searchPageData() {
+          let pageUrl = window.location.href;
+          if(/.*\/search\/?.*\?q=.+/.test(pageUrl)) {   
+            const queryString = pageUrl.split('?')[1];
+            const urlParams = new URLSearchParams(queryString);
+            const search_term = urlParams.get("q");
+
+            if (performance.navigation.type === 0) {
+              dataLayer.push({
+                 event: 'search', 
+                 search_term
+              });
+            }
           }
         }
 
@@ -171,10 +345,14 @@
         miniCartData() {
           if(this.miniCartButtonSelector.length) {
             let self = this;
+            if(this.miniCartAppersOn === 'hover') {
+              this.miniCartAppersOn = 'mouseenter';
+            }
             this.miniCartButtonSelector.forEach((selector) => {
-              let miniCartButton = document.querySelector(selector);
+            let miniCartButton = document.querySelector(selector);
+
               if(miniCartButton) {
-                miniCartButton.addEventListener('click', () => {
+                miniCartButton.addEventListener(self.miniCartAppersOn, () => {
                   self.cartItemsDataLayer('view_cart', self.cart);
                 });
               }
@@ -494,7 +672,7 @@
         singleCartItemDataLayer(event, item) { 
           dataLayer.push({ "ecommerce": null });
           const dataLayerData = {
-            "event": event,
+            "event": this.eventPrefix + event,
             "ecommerce": {
               "currency": this.cart.currency,
               "value": +(((item.final_price / 100) * item.quantity).toFixed(2)),
@@ -540,7 +718,7 @@
         cartItemsDataLayer(event, cart) {
           dataLayer.push({ 'ecommerce': null });
           const dataLayerData = {
-            'event': event,
+            "event": this.eventPrefix + event,
             'ecommerce': {
                'currency': this.cart.currency,
                'items': cart.items.map((item, index) => {
@@ -600,36 +778,89 @@
         }
 
         
-        // newsletters signup
-        newsletterSignupData() {
-        document.addEventListener('click', function(event) {
-          let target = event.target.closest('form[action^="/contact"] button[type="submit"]');
-          let targetForm = event.target.closest('form[action^="/contact"]');
-          if(target && targetForm) {
-            let email = targetForm.querySelector('input[type="email"]').value;
-            let formType = targetForm.querySelector('input[name="contact[tags]"]');
-            if(formType && formType.value === 'newsletter') {
-              let form_location = window.location.href;
-              let form_id = targetForm.getAttribute('id');
-              let form_classes = targetForm.getAttribute('class');
-        
-              dataLayer.push({
-                event: 'newsletter_signup',
-                email: email,
-                form_location,
-                form_id,
-                form_classes
+        // contact form submit & newsletters signup
+        formData() {
+          const self = this;
+          document.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            let targetForm = event.target.closest('form[action^="/contact"]');
+
+
+            if(targetForm) {
+              const formData = {
+                form_location: window.location.href,
+                form_id: targetForm.getAttribute('id'),
+                form_classes: targetForm.getAttribute('class')
+              };
+                            
+              let formType = targetForm.querySelector('input[name="form_type"]');
+              let inputs = targetForm.querySelectorAll("input:not([type=hidden]):not([type=submit]), textarea, select");
+              
+              inputs.forEach(function(input) {
+                var inputName = input.name;
+                var inputValue = input.value;
+                
+                if (inputName && inputValue) {
+                  var matches = inputName.match(/\[(.*?)\]/);
+                  if (matches && matches.length > 1) {
+                     var fieldName = matches[1];
+                     formData[fieldName] = input.value;
+                  }
+                }
               });
+              
+              if(formType && formType.value === 'customer') {
+                dataLayer.push({ event: self.eventPrefix + 'newsletter_signup', ...formData});
+              } else if(formType && formType.value === 'contact') {
+                dataLayer.push({ event: self.eventPrefix + 'contact_form_submit', ...formData});
+              }
             }
-          }
-        });
-      }
+          });
+
+        }
+
+        // phone_number_click event
+        phoneClickData() {
+          const self = this; 
+          document.addEventListener('click', function(event) {
+            let target = event.target.closest('a[href^="tel:"]');
+            if(target) {
+              let phone_number = target.getAttribute('href').replace('tel:', '');
+              dataLayer.push({
+                event: self.eventPrefix + 'phone_number_click',
+                page_location: window.location.href,
+                link_classes: target.getAttribute('class'),
+                link_id: target.getAttribute('id'),
+                phone_number
+              })
+            }
+          });
+        }
+  
+        // email_click event
+        emailClickData() {
+          const self = this; 
+          document.addEventListener('click', function(event) {
+            let target = event.target.closest('a[href^="mailto:"]');
+            if(target) {
+              let email_address = target.getAttribute('href').replace('mailto:', '');
+              dataLayer.push({
+                event: self.eventPrefix + 'email_click',
+                page_location: window.location.href,
+                link_classes: target.getAttribute('class'),
+                link_id: target.getAttribute('id'),
+                email_address
+              })
+            }
+          });
+        }
       } 
-      
+      // end Ultimate_Shopify_GTM_DataLayer
 
       document.addEventListener('DOMContentLoaded', function() {
         try{
-          new GTM_DataLayer();
+          new Ultimate_Shopify_GTM_DataLayer();
         }catch(error) {
           console.log(error);
         }
