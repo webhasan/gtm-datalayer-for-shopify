@@ -18,6 +18,20 @@
           // keep the value false to get non-formatted product id
           this.formattedItemId = true; 
 
+          // add to wishlist selectors
+          this.addToWishListSelectors = {
+            'addWishListIcon': '',
+            'gridItemSelector': '',
+            'productLinkSelector': 'a[href*="/products/"]'
+          }
+
+          // quick view selectors
+          this.quickViewSelector = {
+            'quickViewElement': '',
+            'gridItemSelector': '',
+            'productLinkSelector': 'a[href*="/products/"]'
+          }
+
           // mini cart button selector
           this.miniCartButton = [
             'a[href="/cart"]', 
@@ -37,25 +51,11 @@
             '.shopify-payment-button'
           ]
 
-          // add to wishlist selectors
-          this.addToWishListSelectors = {
-            'addWishListIcon': '',
-            'gridItemSelector': '',
-            'productLinkSelector': 'a[href*="/products/"]'
-          }
-
-          // quick view selectors
-          this.quickViewSelector = {
-            'quickViewElement': '',
-            'gridItemSelector': '',
-            'productLinkSelector': 'a[href*="/products/"]'
-          }
-
           // keep the value true if Add to Cart redirect to cart page
           this.isAddToCartRedirect = false;
           
           // keep the value false if cart items increment/decrement/remove refresh page 
-          this.isAjaxCartIncrementDecrement = false;
+          this.isAjaxCartIncrementDecrement = true;
           
 
           // Caution: Do not modify anything below this line, as it may result in it not functioning correctly.
