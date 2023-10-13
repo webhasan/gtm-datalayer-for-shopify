@@ -3,55 +3,59 @@
   * Author: Md Hasanuzzamna
   * Email: webhasan24@gmail.com
   * Linkedin: https://linkedin.com/md-h
-  * Version: 1.5.0
-  * Last Update: 12 Oct 2023
+  * Version: 1.5
+  * Last Update: 13 Oct 2023
   */
   
   (function() {
-      class Ultimate_GTM_DataLayer {
+      class Ultimate_Shopify_DataLayer {
         constructor() {
           window.dataLayer = window.dataLayer || []; 
           
+          // use prefix of events name
           this.eventPrefix = '';
+
+          // keep the value false to get non-formatted product id
           this.formattedItemId = true; 
 
-          // settings for min cart
-          this.miniCartButtonSelector = [
+          // mini cart button selector
+          this.miniCartButton = [
             'a[href="/cart"]', 
           ];
           this.miniCartAppersOn = 'click';
 
 
-          // settings for begin checkout
-          this.beginCheckoutbuttons = [
+          // begin checkout buttons/links selectors
+          this.beginCheckoutButtons = [
             'button[name="checkout"]',
             'a[href="/checkout"]',
             '.additional-checkout-buttons',
           ];
 
-          this.shopifyDeirectPaymentButtonLink = [
+          // direct checkout button selector
+          this.shopifyDirectCheckoutButton = [
             '.shopify-payment-button'
           ]
 
-          // settings for add to wishlist
+          // add to wishlist selectors
           this.addToWishListSelectors = {
             'addWishListIcon': '',
             'gridItemSelector': '',
             'productLinkSelector': 'a[href*="/products/"]'
           }
 
-          // settings for quick view
+          // quick view selectors
           this.quickViewSelector = {
             'quickViewElement': '',
             'gridItemSelector': '',
             'productLinkSelector': 'a[href*="/products/"]'
           }
 
-          // if add to cart redirect to cart page keep the value true
-          this.isAddToCartRedirect = true;
+          // keep the value true if Add to Cart redirect to cart page
+          this.isAddToCartRedirect = false;
           
-          // if cart item increment, decrement reload page keep it false
-          this.isAjaxCartIncrementDecrement = true;
+          // keep the value false if cart items increment/decrement/remove refresh page 
+          this.isAjaxCartIncrementDecrement = false;
           
 
           // Caution: Do not modify anything below this line, as it may result in it not functioning correctly.
@@ -172,7 +176,7 @@
           
           // fetch
           let originalFetch = window.fetch;
-          let debounce = this.debounce(1000);
+          let debounce = this.debounce(800);
           
           window.fetch = function () {
             return originalFetch.apply(this, arguments).then((response) => {
@@ -180,7 +184,7 @@
                 let cloneResponse = response.clone();
                 let requestURL = arguments[0];
                 
-                if(/.*\/search\/?.*\?q=.+/.test(requestURL)) {   
+                if(/.*\/search\/?.*\?.*q=.+/.test(requestURL)) {   
                   const queryString = requestURL.split('?')[1];
                   const urlParams = new URLSearchParams(queryString);
                   const search_term = urlParams.get("q");
@@ -265,13 +269,26 @@
             xhr.send = function() {
     
                 // Only proceed if the request URL matches what we're looking for.
-                if (requestURL.includes("/cart/add") || requestURL.includes("/cart/change")) {
+                if (requestURL.includes("/cart/add") || requestURL.includes("/cart/change") || /.*\/search\/?.*\?.*q=.+/.test(requestURL)) {
         
                     xhr.addEventListener('load', function() {
                         if (xhr.readyState === 4) {
                             if (xhr.status >= 200 && xhr.status < 400) { 
 
-                               if(requestURL.includes("/cart/add")) {
+                              if(/.*\/search\/?.*\?.*q=.+/.test(requestURL)) {
+                                const queryString = requestURL.split('?')[1];
+                                const urlParams = new URLSearchParams(queryString);
+                                const search_term = urlParams.get("q");
+
+                                debounce(function() {
+                                  dataLayer.push({
+                                    event: 'search', 
+                                    search_term
+                                  })
+                                });
+                              }
+
+                              else if(requestURL.includes("/cart/add")) {
                                  
                                    const item = JSON.parse(xhr.responseText);
                                    self.singleCartItemDataLayer('add_to_cart', item);
@@ -343,12 +360,12 @@
 
         // view_cart
         miniCartData() {
-          if(this.miniCartButtonSelector.length) {
+          if(this.miniCartButton.length) {
             let self = this;
             if(this.miniCartAppersOn === 'hover') {
               this.miniCartAppersOn = 'mouseenter';
             }
-            this.miniCartButtonSelector.forEach((selector) => {
+            this.miniCartButton.forEach((selector) => {
             let miniCartButton = document.querySelector(selector);
 
               if(miniCartButton) {
@@ -364,7 +381,7 @@
         beginCheckoutData() {
           let self = this;
           document.addEventListener('click', () => {
-            let targetElement = event.target.closest(self.beginCheckoutbuttons.join(', '));
+            let targetElement = event.target.closest(self.beginCheckoutButtons.join(', '));
             if(targetElement) {
               self.cartItemsDataLayer('begin_checkout', self.cart);
             }
@@ -431,13 +448,13 @@
           const variants = {{product.variants | json}}
           this.singleCartItemDataLayer('view_item', item);
 
-          if(this.shopifyDeirectPaymentButtonLink.length) {
+          if(this.shopifyDirectCheckoutButton.length) {
               let self = this;
               document.addEventListener('pointerdown', (event) => {
                   
                 
                 let target = event.target;
-                let checkoutButton = event.target.closest(this.shopifyDeirectPaymentButtonLink.join(', '));
+                let checkoutButton = event.target.closest(this.shopifyDirectCheckoutButton.join(', '));
 
                 if(checkoutButton && (variants || self.quickViewVariants)) {
 
@@ -622,11 +639,11 @@
             });
 
             {% unless template contains 'product' %}
-              if(this.shopifyDeirectPaymentButtonLink.length) {
+              if(this.shopifyDirectCheckoutButton.length) {
                 let self = this;
                 document.addEventListener('pointerdown', (event) => {
                   let target = event.target;
-                  let checkoutButton = event.target.closest(this.shopifyDeirectPaymentButtonLink.join(', '));
+                  let checkoutButton = event.target.closest(this.shopifyDirectCheckoutButton.join(', '));
                   
                   if(self.quickViewVariants && self.quickViewedItem && self.quickViewVariants.length && checkoutButton) {
 
@@ -782,8 +799,7 @@
         formData() {
           const self = this;
           document.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
+
             let targetForm = event.target.closest('form[action^="/contact"]');
 
 
@@ -856,11 +872,11 @@
           });
         }
       } 
-      // end Ultimate_Shopify_GTM_DataLayer
+      // end Ultimate_Shopify_DataLayer
 
       document.addEventListener('DOMContentLoaded', function() {
         try{
-          new Ultimate_Shopify_GTM_DataLayer();
+          new Ultimate_Shopify_DataLayer();
         }catch(error) {
           console.log(error);
         }

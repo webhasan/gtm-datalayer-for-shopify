@@ -24,16 +24,26 @@ Whatsapp Group For Quick Support:
 7. **add_to_wishlist**
 8. **purchase**
 9. **newsletter_signup**
-10. Logged customer and in the checkout page customer details included as **customer** object with dataLayer
-11. **Event Paramiters:** currency, value, transaction_id, coupon, shipping, vat, items, item_list_name, item_list_id
-12. **Items Paramiters** item_id, item_name, quantity, price, discount, item_brand, item_category, item_variant, sku, item_list_name, item_list_id
+10. **search**
+11. **phone_number_click**
+12. **email_click**
+13. Logged customer and in the checkout page customer details included as **customer** object with dataLayer
+14. **Event Paramiters:** currency, value, transaction_id, coupon, shipping, vat, items, item_list_name, item_list_id
+15. **Items Paramiters** item_id, item_name, quantity, price, discount, item_brand, item_category, item_variant, sku, item_list_name, item_list_id
 
 ## Features ##
 With all general event tracking it also tracks following special events 
-1. Quick View Event Tracking (as **view_item**)
-2. Mini Cart and Dropdown Cart, Cart Drawer Tracking (as **view_cart**)
-3. Shopify Direct Checkout Tracking ( as **add_to_cart** & **begin_checkout**)
-4. Sticky Cart, Sidebar Cart etc Tracaking ( as **add_to_cart**)
-5. Event was tacked by **Ajax Response** so not data discrepancy for edge cases
-6. No **jQuery**, no **3rd Party Scripet** was included, all code was written ES6 Object Oriented Way. Added proper error handling so that there is not JS error
+1. DataLayer event prefix
+2. Quick View Event Tracking (as **view_item**)
+3. Mini Cart and Dropdown Cart, Cart Drawer Tracking (as **view_cart**)
+4. Shopify Direct Checkout Tracking ( as **add_to_cart** & **begin_checkout**)
+5. Sticky Cart, Sidebar Cart etc Tracaking ( as **add_to_cart**)
+6. Shopify Ajax Search Tracking ( as **search** )
+7. Event was tacked by **Ajax Response** so not data discrepancy for edge cases
+8. No **jQuery**, no **3rd Party Scripet** was included, all code was written ES6 Object Oriented Way. Added proper error handling so that there is not JS error
+
+
+For more information, please watch the video below.
+
+<a href="https://youtu.be/WBjmUXQ9dIs" target="_blank"><img src="images/play-png.png" width="100"/></a>
 
