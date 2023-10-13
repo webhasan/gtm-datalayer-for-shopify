@@ -1,5 +1,5 @@
 # Ultimate GTM Data Layer for Shopify ecommerce
-Whatsapp Group For Quick Support: 
+Join the WhatsApp Group for Support, Suggestions, and Bug Reports:
 
 <a href="https://chat.whatsapp.com/CYI4WpjjckA2CsTrw7IlIB" target="_blank"><img src="images/whatsapp.png" width="150"/></a>
 
