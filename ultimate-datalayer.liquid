@@ -694,7 +694,7 @@
               "currency": this.cart.currency,
               "value": +(((item.final_price / 100) * item.quantity).toFixed(2)),
               "items": [{
-                  "item_id": this.formattedItemId  ? `shopify_${this.countryCode}_${item.product_id}_${item.variant_id}` : item.product_id,
+                  "item_id": this.formattedItemId  ? `shopify_${this.countryCode}_${item.product_id}_${item.variant_id}` : item.product_id.toString(),
                   "variant_id": item.variant_id.toString(),
                   "item_name": item.product_title,
                   "quantity": item.quantity,
