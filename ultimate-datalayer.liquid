@@ -461,10 +461,22 @@
 
                     let checkoutForm = checkoutButton.closest('form[action*="/cart/add"]');
                     if(checkoutForm) {
-                        
+
+                        let variant_id = null;
                         let varientInput = checkoutForm.querySelector('input[name="id"]');
+                        let varientIdFromURL = new URLSearchParams(window.location.search).get('variant');
+                        let firstVarientId = item.variant_id;
+
                         if(varientInput) {
-                            let variant_id = parseInt(varientInput.value);
+                          variant_id = parseInt(varientInput.value);
+                        }elseif(varientIdFromURL) {
+                          variant_id = varientIdFromURL;
+                        }elseif(firstVarientId) {
+                          variant_id = firstVarientId;
+                        }
+
+                        if(variant_id) {
+                            let variant_id = parseInt(variant_id);
                           
                             let quantity = 1;
                             let quantitySelector = checkoutForm.getAttribute('id');
