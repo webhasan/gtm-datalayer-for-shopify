@@ -451,7 +451,7 @@
 
           if(this.shopifyDirectCheckoutButton.length) {
               let self = this;
-              document.addEventListener('pointerdown', (event) => {
+              document.addEventListener('mouseover', (event) => {
                   
                 
                 let target = event.target;
@@ -476,7 +476,7 @@
                         }
 
                         if(variant_id) {
-                            let variant_id = parseInt(variant_id);
+                            variant_id = parseInt(variant_id);
                           
                             let quantity = 1;
                             let quantitySelector = checkoutForm.getAttribute('id');
