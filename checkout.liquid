@@ -62,6 +62,9 @@
     {% endif %}
   {% endif %}
 
+  if (currentUser.email) {
+    currentUser.hash_email = "{{ currentUser.email | sha256}}"
+  }
   dataLayer.push({
     customer: currentUser
   });
