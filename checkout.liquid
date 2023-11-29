@@ -25,6 +25,7 @@
     currentUser.full_name = "{{ customer.name }}";
     currentUser.email = "{{ customer.email }}";
     currentUser.phone = "{{ customer.default_address.phone }}";
+    currentUser.new_customer = {% if customer.orders_count < 2 %}true{% else %}false{% endif %};
 
     {% if customer.default_address %}
       currentUser.address = {
@@ -46,6 +47,7 @@
     currentUser.full_name = "{{ checkout.customer.name }}";
     currentUser.email = "{{ checkout.customer.email }}";
     currentUser.phone = "{{ checkout.customer.default_address.phone }}";
+    currentUser.new_customer = {% if checkout.customer.orders_count < 2 %}true{% else %}false{% endif %};
 
     {% if checkout.billing_address %}
       currentUser.address = {
