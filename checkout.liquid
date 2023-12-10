@@ -75,36 +75,36 @@
   // purchase event
   const couponCode = [];
   {% for discount_application in discount_applications %}
-    couponCode.push('{{ discount_application.title }}')
+    couponCode.push("{{ discount_application.title }}")
   {% endfor %}
 
 
   dataLayer.push({ ecommerce: null });
   dataLayer.push({
-    event: eventPrefix + 'purchase',
+    event: eventPrefix + "purchase",
     ecommerce: {
-      'transaction_id': '{{ checkout.order_number | replace: '#', '' | default: checkout.id | replace: '#', '' }}',
-      'value': {{ checkout.total_price  | times: 0.01 }},
-      'tax': {{ checkout.tax_price | times: 0.01 }},
-      'shipping': {{ checkout.shipping_price | times: 0.01 }},
-      'discount': {{ checkout.discounts_amount | times: 0.01 }},
-      'currency': '{{ checkout.currency }}',
-      'coupon': couponCode.join(','),
-      'items': [
+      transaction_id: "{{ checkout.order_number | replace: '#', '' | default: checkout.id | replace: '#', '' }}",
+      value: {{ checkout.total_price  | times: 0.01 }},
+      tax: {{ checkout.tax_price | times: 0.01 }},
+      shipping: {{ checkout.shipping_price | times: 0.01 }},
+      discount: {{ checkout.discounts_amount | times: 0.01 }},
+      currency: "{{ checkout.currency }}",
+      coupon: couponCode.join(','),
+      items: [
         {% for line_item in line_items %}
           {
-            'item_id': formatedItemId ? "shopify_{{ shop.address.country_code }}_{{ line_item.product_id }}_{{ line_item.variant.id }}" : "{{ line_item.product_id }}",
-            'variant_id': "{{ line_item.variant.id }}",
-            'item_name': "{{ line_item.product.title }}",
+            item_id: formatedItemId ? "shopify_{{ shop.address.country_code }}_{{ line_item.product_id }}_{{ line_item.variant.id }}" : "{{ line_item.product_id }}",
+            variant_id: "{{ line_item.variant.id }}",
+            item_name: "{{ line_item.product.title }}",
             {% if line_item.variant.title != "Default Title" %}
               'item_variant': "{{ line_item.variant.title }}",
             {% endif %}
-            'discount': {{ line_item.line_level_total_discount | times: 0.01 }},
-            'sku': '{{ line_item.sku }}',
-            'price': {{ line_item.final_price | times: 0.01 }},
-            'quantity': {{ line_item.quantity }},
-            'item_brand': '{{ line_item.vendor }}',
-            'item_category': '{{ line_item.product.type }}'
+            discount: {{ line_item.line_level_total_discount | times: 0.01 }},
+            sku: "{{ line_item.sku }}",
+            price: {{ line_item.final_price | times: 0.01 }},
+            quantity: {{ line_item.quantity }},
+            item_brand: "{{ line_item.vendor }}",
+            item_category: "{{ line_item.product.type }}"
           },
         {% endfor %}
       ]
