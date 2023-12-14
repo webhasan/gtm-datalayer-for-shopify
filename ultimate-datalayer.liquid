@@ -15,7 +15,7 @@
           // use a prefix of events name
           this.eventPrefix = '';
 
-          // keep the value false to get non-formatted product id
+          //Keep the value false to get non-formatted product ID
           this.formattedItemId = true; 
 
           // add to wishlist selectors
@@ -52,7 +52,7 @@
             '.shopify-payment-button'
           ]
 
-          // keep the value true if Add to Cart redirect to cart page
+          //Keep the value true if Add to Cart redirects to the cart page
           this.isAddToCartRedirect = false;
           
           // keep the value false if cart items increment/decrement/remove refresh page 
@@ -385,7 +385,7 @@
         // begin_checkout
         beginCheckoutData() {
           let self = this;
-          document.addEventListener('click', () => {
+          document.addEventListener('pointerdown', () => {
             let targetElement = event.target.closest(self.beginCheckoutButtons.join(', '));
             if(targetElement) {
               self.cartItemsDataLayer('begin_checkout', self.cart);
