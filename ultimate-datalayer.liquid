@@ -4,7 +4,7 @@
   * Email: webhasan24@gmail.com
   * Linkedin: https://linkedin.com/md-h
   * Version: 1.5.3
-  * Last Update: 22 Nov 2023
+  * Last Update: 19 Dec 2023
   */
   
   (function() {
@@ -203,11 +203,18 @@
                 }
                 else if (requestURL.includes("/cart/add")) {
                   cloneResponse.text().then((text) => {
-                    let item = JSON.parse(text);
-                    self.singleCartItemDataLayer('add_to_cart', item);
+                    let data = JSON.parse(text);
+
+                    if(data.items && Array.isArray(data.items)) {
+                      data.items.forEach(function(item) {
+                         self.singleCartItemDataLayer('add_to_cart', item);
+                      })
+                    } else {
+                      self.singleCartItemDataLayer('add_to_cart', data);
+                    }
                     self.updateCart();
                   });
-                }else if(requestURL.includes("/cart/change")) {
+                }else if(requestURL.includes("/cart/change") || requestURL.includes("/cart/update")) {
                   
                    cloneResponse.text().then((text) => {
                      
