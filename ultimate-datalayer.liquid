@@ -146,6 +146,7 @@
                   zip_code: "{{ customer.default_address.zip }}",
                   company: "{{ customer.default_address.company }}",
                   country: "{{ customer.default_address.country.name }}",
+                  country_code: "{{ customer.default_address.country_code }}",
                   province: "{{ customer.default_address.province }}"
                 };
               {% endif %}
