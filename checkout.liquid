@@ -53,6 +53,7 @@
           zip_code: "{{ customer.default_address.zip }}",
           company: "{{ customer.default_address.company }}",
           country: "{{ customer.default_address.country.name }}",
+          country_code: "{{ customer.default_address.country_code }}",
           province: "{{ customer.default_address.province }}"
         };
       {% endif %}
@@ -75,6 +76,7 @@
           zip_code: "{{ checkout.billing_address.zip }}",
           company: "{{ checkout.billing_address.company }}",
           country: "{{ checkout.billing_address.country.name }}",
+          country_code: "{{ checkout.billing_address.country_code }}",
           province: "{{ checkout.billing_address.province }}"
         };
       {% endif %}
