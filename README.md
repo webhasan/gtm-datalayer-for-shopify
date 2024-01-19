@@ -1,4 +1,4 @@
-# Ultimate GTM Data Layer for Shopify ecommerce
+# Ultimate GTM Data Layer for Shopify
 Join the WhatsApp Group for Support, Suggestions, and Bug Reports:
 
 <a href="https://chat.whatsapp.com/CYI4WpjjckA2CsTrw7IlIB" target="_blank"><img src="images/whatsapp.png" width="150"/></a>
@@ -10,7 +10,7 @@ Join the WhatsApp Group for Support, Suggestions, and Bug Reports:
 4. From shopify admin dashboard go to **Settings >> Checkout (Scroll Down) >> Additional scripts**. Copy all code from `checkout.liquid` from this repository to the  `Additional scripts` field. Change the example GTM example tracking ID **000-00000** to the real GTM ID
 5. Depending on your Shopify theme, you might have to make some adjustments. For more information, please refer to the video below.
 
-<a href="https://youtu.be/RYC-D1Wxx6g" target="_blank"><img src="images/play-png.png" width="100"/></a>
+<a href="https://youtu.be/98w-kEKLICQ" target="_blank"><img src="images/play-png.png" width="100"/></a>
 ### 
 
 
@@ -45,5 +45,5 @@ With all general event tracking it also tracks following special events
 
 For more information, please watch the video below.
 
-<a href="https://youtu.be/RYC-D1Wxx6g" target="_blank"><img src="images/play-png.png" width="100"/></a>
+<a href="https://youtu.be/98w-kEKLICQ" target="_blank"><img src="images/play-png.png" width="100"/></a>
 
