@@ -368,10 +368,16 @@
                               }
 
                               else if(requestURL.includes("/cart/add")) {
-                                 
-                                   const item = JSON.parse(xhr.responseText);
-                                   self.ecommerceDataLayer('add_to_cart', {items: [item]});
-                                   self.updateCart();
+                                  const data = JSON.parse(xhr.responseText);
+
+                                  if(data.items && Array.isArray(data.items)) {
+                                    data.items.forEach(function(item) {
+                                        self.ecommerceDataLayer('add_to_cart', {items: [item]});
+                                      })
+                                  } else {
+                                    self.ecommerceDataLayer('add_to_cart', {items: [data]});
+                                  }
+                                  self.updateCart();
                                  
                                }else if(requestURL.includes("/cart/change")) {
                                  
