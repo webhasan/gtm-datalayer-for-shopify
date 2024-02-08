@@ -156,6 +156,10 @@
               currentUser.hash_email = "{{ customer.email | sha256 }}"
             }
 
+            if (currentUser.phone) {
+              currentUser.hash_phone = "{{ customer.phone | sha256 }}"
+            }
+
             window.dataLayer = window.dataLayer || [];
             dataLayer.push({
               customer: currentUser
