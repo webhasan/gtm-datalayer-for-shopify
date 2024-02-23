@@ -864,7 +864,7 @@
           if(data.total_price !== undefined) {
             dataLayerData['ecommerce']['value'] =  +((data.total_price / 100).toFixed(2));
           } else {
-            dataLayerData['ecommerce']['value'] = +(dataLayerData['ecommerce']['items'].reduce((total, item) => total + item.price, 0)).toFixed(2);
+            dataLayerData['ecommerce']['value'] = +(dataLayerData['ecommerce']['items'].reduce((total, item) => total + (item.price * item.quantity), 0)).toFixed(2);
           }
           
           if(data.item_list_id) {
