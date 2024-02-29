@@ -3,8 +3,8 @@
   * Author: Md Hasanuzzamna
   * Email: webhasan24@gmail.com
   * Linkedin: https://linkedin.com/md-h
-  * Version: 2.1
-  * Last Update: 8 Feb 2024
+  * Version: 2.1.5
+  * Last Update: 29 Feb 2024
   */
   
   (function() {
@@ -483,13 +483,12 @@
               this.miniCartAppersOn = 'mouseenter';
             }
             this.miniCartButton.forEach((selector) => {
-            let miniCartButton = document.querySelector(selector);
-
-              if(miniCartButton) {
-                miniCartButton.addEventListener(self.miniCartAppersOn, () => {
-                  self.ecommerceDataLayer('view_cart', self.cart);
-                });
-              }
+              let miniCartButtons = document.querySelectorAll(selector);
+              miniCartButtons.forEach((miniCartButton) => {
+                  miniCartButton.addEventListener(self.miniCartAppersOn, () => {
+                    self.ecommerceDataLayer('view_cart', self.cart);
+                  });
+              })
             });
           }
         }
