@@ -75,6 +75,7 @@
           this.countryCode = "{{ shop.address.country_code }}";
           this.collectData();  
           this.storeURL = "{{ shop.secure_url }}";
+          localStorage.setItem('shopCountryCode', this.countryCode);
         }
 
         updateCart() {
