@@ -1,7 +1,5 @@
 # Ultimate Shopify DataLayer for Google Tag Manager
-Join the WhatsApp Group for Support, Suggestions, and Bug Reports:
-
-<a href="https://chat.whatsapp.com/CYI4WpjjckA2CsTrw7IlIB" target="_blank"><img src="images/whatsapp.png" width="150"/></a>
+**👉 Contact me for support: info@leomeasure.com** 
 
 ## How to use: 
 1. Go to theme edit and paste GTM tracking code right after `<head>` tag in `theme.liquid` file
