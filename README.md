@@ -15,19 +15,24 @@
 ## Events Included! ##
 1. **view_item**
 2. **view_item_list**
-3. **add_to_cart**
-4. **remove_from_cart**
-5. **view_cart**
-6. **begin_checkout**
-7. **add_to_wishlist**
-8. **purchase**
-9. **newsletter_signup**
-10. **search**
-11. **phone_number_click**
-12. **email_click**
-13. Logged customer and on the checkout page customer details included as **customer** object with dataLayer
-14. **Event Parameters:** currency, value, transaction_id, coupon, shipping, vat, items, item_list_name, item_list_id
-15. **Items Parameters** item_id, item_name, quantity, price, discount, item_brand, item_category, item_variant, sku, item_list_name, item_list_id
+3. **select_item**
+4. **add_to_cart**
+5. **remove_from_cart**
+6. **view_cart**
+7. **view_item_list**
+8. **begin_checkout**
+9. **add_to_wishlist**
+10. **add_payment_info**
+11. **add_shopping_info**
+12. **purchase**
+13. **contact_form_submit**
+14. **newsletter_signup**
+15. **search**
+16. **phone_number_click**
+17. **email_click**
+18. Logged customer and on the checkout page customer details included as **customer** object with dataLayer
+19. **Event Parameters:** currency, value, transaction_id, coupon, shipping, vat, items, item_list_name, item_list_id
+20. **Items Parameters** item_id, item_name, quantity, price, discount, item_brand, item_category, item_variant, sku, item_list_name, item_list_id
 
 ## Features ##
 With all general event tracking it also tracks following special events 
