@@ -497,7 +497,7 @@
         // begin_checkout
         beginCheckoutData() {
           let self = this;
-          document.addEventListener('pointerdown', () => {
+          document.addEventListener('pointerdown', (event) => {
             let targetElement = event.target.closest(self.beginCheckoutButtons.join(', '));
             if(targetElement) {
               self.ecommerceDataLayer('begin_checkout', self.cart);
