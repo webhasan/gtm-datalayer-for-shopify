@@ -113,5 +113,6 @@ async function ecommerceDataLayer(gtm_event_name, event) {
     });
     dataLayer.push(dataLayerInfo);
 
-    console.log('Event: ' + event_prefix + gtm_event_name, Object.assign(dataLayerInfo, customerInfo));
+    const css = 'color: red; font-weight: bold; font-size: 14px; font-style: italic;';
+    console.log('%cGTM Event: ' + event_prefix + gtm_event_name, css, Object.assign(dataLayerInfo, customerInfo));
 }
