@@ -50,10 +50,10 @@
           address2: "{{ customer.default_address.address2 }}",
           city: "{{ customer.default_address.city }}",
           street: "{{ customer.default_address.street }}",
-          zip_code: "{{ customer.default_address.zip }}",
+          zip: "{{ customer.default_address.zip }}",
           company: "{{ customer.default_address.company }}",
           country: "{{ customer.default_address.country.name }}",
-          country_code: "{{ customer.default_address.country_code }}",
+          countryCode: "{{ customer.default_address.country_code }}",
           province: "{{ customer.default_address.province }}"
         };
       {% endif %}
@@ -73,10 +73,10 @@
           address2: "{{ checkout.billing_address.address2 }}",
           city: "{{ checkout.billing_address.city }}",
           street: "{{ checkout.billing_address.street }}",
-          zip_code: "{{ checkout.billing_address.zip }}",
+          zip: "{{ checkout.billing_address.zip }}",
           company: "{{ checkout.billing_address.company }}",
           country: "{{ checkout.billing_address.country.name }}",
-          country_code: "{{ checkout.billing_address.country_code }}",
+          countryCode: "{{ checkout.billing_address.country_code }}",
           province: "{{ checkout.billing_address.province }}"
         };
       {% endif %}
