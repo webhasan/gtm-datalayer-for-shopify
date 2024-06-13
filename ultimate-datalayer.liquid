@@ -103,7 +103,7 @@
         eventConsole(eventName, eventData) {
           const css1 = 'background: red; color: #fff; font-size: normal; border-radius: 3px 0 0 3px; padding: 3px 4px;';
           const css2 = 'background-color: blue; color: #fff; font-size: normal; border-radius: 0 3px 3px 0; padding: 3px 4px;';
-          console.log('%cGTM Event:%c' + eventName, css1, css2, eventData);
+          console.log('%cGTM DataLayer Event:%c' + eventName, css1, css2, eventData);
         }
 
         collectData() { 
@@ -132,7 +132,7 @@
             this.emailClickData();
         }        
 
-        //logged in customer data 
+        //logged-in customer data 
         customerData() {
             const currentUser = {};
             {% if customer %}
@@ -897,7 +897,6 @@
           }
 
           dataLayer.push(dataLayerData);
-
           this.eventConsole(this.eventPrefix + event, dataLayerData);
         }
 
@@ -935,8 +934,10 @@
               
               if(formType && formType.value === 'customer') {
                 dataLayer.push({ event: self.eventPrefix + 'newsletter_signup', ...formData});
+                self.eventConsole(self.eventPrefix + 'newsletter_signup', { event: self.eventPrefix + 'newsletter_signup', ...formData});
               } else if(formType && formType.value === 'contact') {
                 dataLayer.push({ event: self.eventPrefix + 'contact_form_submit', ...formData});
+                self.eventConsole(self.eventPrefix + 'contact_form_submit', { event: self.eventPrefix + 'contact_form_submit', ...formData});
               }
             }
           });
