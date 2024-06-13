@@ -1,7 +1,7 @@
-const event_prefix = '';
+const event_prefix = 'leomeasure_';
 const formattedItemId = true;
 const GTM_container_url = 'https://www.googletagmanager.com';
-const GTM_container_id = 'GTM-0000000';
+const GTM_container_id = 'GTM-K9W894CT';
 
 
 let storeCountryCode = window.localStorage.getItem('shopCountryCode');
@@ -33,13 +33,16 @@ if (window.location.href.includes('/checkouts/')) {
           page_location: event.context.document.location.href,   
         });
     });
-    // end tag manager
+    // end tag manger
 
 
     // DataLayer Events
     analytics.subscribe('payment_info_submitted', (event) => ecommerceDataLayer('add_payment_info', event));
+
     analytics.subscribe('checkout_shipping_info_submitted', (event) => ecommerceDataLayer('add_shipping_info', event));
+
     analytics.subscribe('checkout_completed', (event) => ecommerceDataLayer('purchase', event));
+
 }
 
 
@@ -113,6 +116,10 @@ async function ecommerceDataLayer(gtm_event_name, event) {
     });
     dataLayer.push(dataLayerInfo);
 
-    const css = 'color: red; font-weight: bold; font-size: 14px; font-style: italic;';
-    console.log('%cGTM Event: ' + event_prefix + gtm_event_name, css, Object.assign(dataLayerInfo, customerInfo));
+    const css1 = 'background: red; color: #fff; font-size: normal; border-radius: 3px 0 0 3px; padding: 3px 4px;';
+    const css2 = 'background-color: blue; color: #fff; font-size: normal; border-radius: 0 3px 3px 0; padding: 3px 4px;';
+    
+    console.log(
+      '%cGTM Event:%c' + event_prefix + gtm_event_name, css1, css2, Object.assign({}, dataLayerInfo, customerInfo)
+    );
 }
