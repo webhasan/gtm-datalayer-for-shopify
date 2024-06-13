@@ -100,6 +100,12 @@
           };
         }
 
+        eventConsole(eventName, eventData) {
+          const css1 = 'background: red; color: #fff; font-size: normal; border-radius: 3px 0 0 3px; padding: 3px 4px;';
+          const css2 = 'background-color: blue; color: #fff; font-size: normal; border-radius: 0 3px 3px 0; padding: 3px 4px;';
+          console.log('%cGTM Event:%c' + eventName, css1, css2, eventData);
+        }
+
         collectData() { 
             this.customerData();
             this.ajaxRequestData();
@@ -892,11 +898,7 @@
 
           dataLayer.push(dataLayerData);
 
-          const css1 = 'background: red; color: #fff; font-size: normal; border-radius: 3px 0 0 3px; padding: 3px 4px;';
-          const css2 = 'background-color: blue; color: #fff; font-size: normal; border-radius: 0 3px 3px 0; padding: 3px 4px;';
-          console.log(
-            '%cGTM Event:%c' + this.eventPrefix + event, css1, css2, Object.assign({}, dataLayerInfo, customerInfo)
-          );
+          this.eventConsole(this.eventPrefix + event, dataLayerData);
         }
 
         
@@ -972,7 +974,7 @@
                 link_classes: target.getAttribute('class'),
                 link_id: target.getAttribute('id'),
                 email_address
-              })
+              });
             }
           });
         }
