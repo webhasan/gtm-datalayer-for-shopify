@@ -120,6 +120,6 @@ async function ecommerceDataLayer(gtm_event_name, event) {
     const css2 = 'background-color: blue; color: #fff; font-size: normal; border-radius: 0 3px 3px 0; padding: 3px 4px;';
     
     console.log(
-      '%cGTM Event:%c' + event_prefix + gtm_event_name, css1, css2, Object.assign({}, dataLayerInfo, customerInfo)
+      '%cGTM DataLayer Event:%c' + event_prefix + gtm_event_name, css1, css2, Object.assign({}, dataLayerInfo, customerInfo)
     );
 }
