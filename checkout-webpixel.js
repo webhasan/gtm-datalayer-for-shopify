@@ -11,7 +11,7 @@ function gtag() {
     dataLayer.push(arguments);
 }
 
-if (window.location.href.includes('/checkouts/cn/')) {
+if (window.location.href.includes('/checkouts/')) {
     // tag manager 
     (function(w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -33,16 +33,13 @@ if (window.location.href.includes('/checkouts/cn/')) {
           page_location: event.context.document.location.href,   
         });
     });
-    // end tag manger
+    // end tag manager
 
 
     // DataLayer Events
     analytics.subscribe('payment_info_submitted', (event) => ecommerceDataLayer('add_payment_info', event));
-
     analytics.subscribe('checkout_shipping_info_submitted', (event) => ecommerceDataLayer('add_shipping_info', event));
-
     analytics.subscribe('checkout_completed', (event) => ecommerceDataLayer('purchase', event));
-
 }
 
 
