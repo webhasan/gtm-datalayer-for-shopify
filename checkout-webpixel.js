@@ -1,4 +1,4 @@
-const event_prefix = 'leomeasure_';
+const event_prefix = '';
 const formattedItemId = true;
 const GTM_container_url = 'https://www.googletagmanager.com';
 const GTM_container_id = 'GTM-0000000';
