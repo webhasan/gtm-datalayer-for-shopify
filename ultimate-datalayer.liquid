@@ -3,8 +3,8 @@
   * Author: Md Hasanuzzamna
   * Email: info@leomeasure.com
   * Linkedin: https://linkedin.com/md-h
-  * Version: 2.1.5
-  * Last Update: 13 Apr 2024
+  * Version: 3.0.0
+  * Last Update: 14 Jun 2024
   */
   
   (function() {
@@ -935,6 +935,7 @@
               if(formType && formType.value === 'customer') {
                 dataLayer.push({ event: self.eventPrefix + 'newsletter_signup', ...formData});
                 self.eventConsole(self.eventPrefix + 'newsletter_signup', { event: self.eventPrefix + 'newsletter_signup', ...formData});
+
               } else if(formType && formType.value === 'contact') {
                 dataLayer.push({ event: self.eventPrefix + 'contact_form_submit', ...formData});
                 self.eventConsole(self.eventPrefix + 'contact_form_submit', { event: self.eventPrefix + 'contact_form_submit', ...formData});
@@ -951,13 +952,16 @@
             let target = event.target.closest('a[href^="tel:"]');
             if(target) {
               let phone_number = target.getAttribute('href').replace('tel:', '');
-              dataLayer.push({
+              let eventData = {
                 event: self.eventPrefix + 'phone_number_click',
                 page_location: window.location.href,
                 link_classes: target.getAttribute('class'),
                 link_id: target.getAttribute('id'),
                 phone_number
-              })
+              }
+
+              dataLayer.push(eventData);
+              this.eventConsole(self.eventPrefix + 'phone_number_click', eventData);
             }
           });
         }
@@ -969,13 +973,16 @@
             let target = event.target.closest('a[href^="mailto:"]');
             if(target) {
               let email_address = target.getAttribute('href').replace('mailto:', '');
-              dataLayer.push({
+              let eventData = {
                 event: self.eventPrefix + 'email_click',
                 page_location: window.location.href,
                 link_classes: target.getAttribute('class'),
                 link_id: target.getAttribute('id'),
                 email_address
-              });
+              }
+
+              dataLayer.push(eventData);
+              this.eventConsole(self.eventPrefix + 'email_click', eventData);
             }
           });
         }
