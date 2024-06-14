@@ -74,13 +74,13 @@ async function ecommerceDataLayer(gtm_event_name, event) {
 
     const customerInfo = {
         customer: {
-            first_name: event.data?.checkout?.billingAddress?.firstName,
-            last_name: event.data?.checkout?.billingAddress?.lastName,
+            first_name: event.data?.checkout?.billingAddress?.firstName || event.data?.checkout?.shippingAddress?.firstName,
+            last_name: event.data?.checkout?.billingAddress?.lastName || event.data?.checkout?.shippingAddress?.lastName,
             email: email,
             hash_email: hash_email,
             phone: phone,
             hash_phone: hash_phone,
-            address: event.data?.checkout?.billingAddress
+            address: event.data?.checkout?.billingAddress || event.data?.checkout?.shippingAddress
         }
     }
     dataLayer.push(customerInfo);
