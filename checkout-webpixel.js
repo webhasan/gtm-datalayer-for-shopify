@@ -1,7 +1,7 @@
 const event_prefix = '';
 const formattedItemId = true;
 const GTM_container_url = 'https://www.googletagmanager.com';
-const GTM_container_id = 'GTM-0000000';
+const GTM_container_id = 'GTM-00000';
 
 
 let storeCountryCode = window.localStorage.getItem('shopCountryCode');
@@ -29,7 +29,7 @@ if (window.location.href.includes('/checkouts/')) {
   
     analytics.subscribe('page_viewed', (event) => {
         window.dataLayer.push({
-          event: 'page_view',
+          event: event_prefix + 'page_view',
           page_location: event.context.document.location.href,   
         });
     });
