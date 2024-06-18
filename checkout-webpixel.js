@@ -80,7 +80,7 @@ async function ecommerceDataLayer(gtm_event_name, event) {
             hash_email: hash_email,
             phone: phone,
             hash_phone: hash_phone,
-            address: event.data?.checkout?.billingAddress || event.data?.checkout?.shippingAddress
+            address: event.data?.checkout?.shippingAddress
         }
     }
     dataLayer.push(customerInfo);
