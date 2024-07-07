@@ -11,7 +11,7 @@ function gtag() {
     dataLayer.push(arguments);
 }
 
-if (window.location.href.includes('/checkouts/')) {
+if (if(/.+\/checkouts?\/.*/.test(window.location.href))) {
     // tag manager 
     (function(w, d, s, l, i) {
         w[l] = w[l] || [];
