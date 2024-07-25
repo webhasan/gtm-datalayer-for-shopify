@@ -649,6 +649,7 @@
                     'product_id': {{ product.id | json }},
                     'variant_id': {{ product.selected_or_first_available_variant.id | json }},
                     'vendor': {{ product.vendor | json }},
+                    'sku': {{ product.selected_or_first_available_variant.sku | json }},
                     'total_discount': 0,
                     'variant_title': {{ product.selected_or_first_available_variant.title | json }},
                     'product_title': {{ product.title | json }},
