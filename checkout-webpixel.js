@@ -98,6 +98,7 @@ async function ecommerceDataLayer(gtm_event_name, event) {
                 item_id: formattedItemId ? 'shopify_' + storeCountryCode + '_' + (item.variant?.product?.id || '') + '_' + (item.variant?.id || '') : item.variant?.product?.id,
                 product_id: item.variant?.product?.id,
                 variant_id: item.variant?.id,
+                sku: item.variant?.sku,
                 item_name: item.title,
                 coupon: item.discountAllocations?.discountApplication?.title,
                 discount: item.discountAllocations?.amount?.amount,
