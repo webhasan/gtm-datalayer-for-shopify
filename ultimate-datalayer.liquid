@@ -556,7 +556,7 @@
               product_title: {{ product.title | json }},
               line_level_total_discount: 0,
               vendor: {{ product.vendor | json }},
-              sku: {{ product.sku | json }},
+              sku: {{ product.selected_or_first_available_variant.sku | json }},
               product_type: {{ product.type | json }},
               item_list_id: {{ product.collections[0].id | json }},
               item_list_name: {{ product.collections[0].title | json }},
