@@ -73,9 +73,10 @@
           // Caution: Do not modify anything below this line, as it may result in it not functioning correctly.
           this.cart = {{ cart | json }}
           this.countryCode = "{{ shop.address.country_code }}";
-          this.collectData();  
           this.storeURL = "{{ shop.secure_url }}";
           localStorage.setItem('shopCountryCode', this.countryCode);
+
+          this.collectData(); 
         }
 
         updateCart() {
