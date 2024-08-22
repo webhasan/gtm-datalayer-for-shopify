@@ -75,8 +75,8 @@
           this.countryCode = "{{ shop.address.country_code }}";
           this.storeURL = "{{ shop.secure_url }}";
           localStorage.setItem('shopCountryCode', this.countryCode);
-
           this.collectData(); 
+          this.itemsList = [];
         }
 
         updateCart() {
@@ -660,12 +660,14 @@
                     'product_type': {{ product.type | json }},
                     'item_list_id': {{ collection.id | json }},
                     'item_list_name': {{ collection.title | json }},
+                    'url': {{product.url | json}},
                     'quantity': 1
                 },
               {% endfor %}
               ]
           };
 
+          this.itemsList = ecommerce.items;
           ecommerce['item_list_id'] = {{ collection.id | json }}
           ecommerce['item_list_name'] = {{ collection.title | json }}
 
@@ -829,10 +831,7 @@
 
           {% if template contains 'collection' %}            
             document.addEventListener('pointerdown', function(event) {
-              
-              // ignore wishlist button click for select_item              
-              if(event.target.closest('button.wishlist-collection-page')) return false;
-              
+                            
               const productLink = event.target.closest('a[href*="/products/"]');
 
               if(productLink) {
