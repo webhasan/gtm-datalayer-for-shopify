@@ -127,6 +127,7 @@
             
             this.addToWishListData();
             this.quickViewData();
+            this.selectItemData(); 
             this.formData();
             this.phoneClickData();
             this.emailClickData();
@@ -817,6 +818,65 @@
             }
             {% endunless %}
           }
+        }
+
+        // select_item events
+        selectItemData() {
+          
+          const self = this;
+          const items = this.itemsList;
+
+          {% if template contains 'collection' %}            
+            document.addEventListener('pointerdown', function(event) {
+              
+              // ignore wishlist button click for select_item              
+              if(event.target.closest('button.wishlist-collection-page')) return false;
+              
+              const productLink = event.target.closest('a[href*="/products/"]');
+
+              if(productLink) {
+                  const linkUrl = productLink.getAttribute('href');
+
+                  const matchProduct = (item) => {
+                    var itemSlug = (item.url.split('/products/')[1]).split('#')[0].split('?')[0].trim();
+                    var linkUrlItemSlug = (linkUrl.split('/products/')[1]).split('#')[0].split('?')[0].trim();
+                    
+                    return itemSlug === linkUrlItemSlug;  
+                  }
+                
+                  const item = items.find(matchProduct);
+                  const index = items.findIndex(matchProduct);
+                
+                  if(item) {
+                    self.ecommerceDataLayer('select_item', {items: [{...item, index: index}]});
+                  }
+              }
+            });
+          {% endif %}
+
+          // select item on varient change
+          document.addEventListener('variant:change', function(event) {            
+            const product_id = event.detail.product.id;
+            const variant_id = event.detail.variant.id;
+            const vendor = event.detail.product.vendor; 
+            const variant_title = event.detail.variant.public_title;
+            const product_title = event.detail.product.title;
+            const final_price = event.detail.variant.price;
+            const product_type = event.detail.product.type;
+
+             const item = {
+                product_id: product_id,
+                product_title: product_title,
+                variant_id: variant_id,
+                variant_title: variant_title,
+                vendor: vendor,
+                final_price: final_price,
+                product_type: product_type, 
+                quantity: 1
+             }
+            
+             self.ecommerceDataLayer('select_item', {items: [item]});
+          });
         }
 
         // all ecommerce events
