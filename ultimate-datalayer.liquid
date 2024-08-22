@@ -1,4 +1,3 @@
-<script>  
   /**
   * Author: Md Hasanuzzamna
   * Email: info@leomeasure.com
@@ -131,6 +130,7 @@
             this.formData();
             this.phoneClickData();
             this.emailClickData();
+            this.loginRegisterData();
         }        
 
         //logged-in customer data 
@@ -987,6 +987,43 @@
               this.eventConsole(self.eventPrefix + 'email_click', eventData);
             }
           });
+        }
+
+        //login register 
+        loginRegisterData() {
+          
+          const self = this; 
+          let isTrackedLogin = false;
+          let isTrackedRegister = false;
+          
+          if(window.location.href.includes('/account/login')) {
+            document.addEventListener('submit', function(e) {
+              const loginForm = e.target.closest('[action="/account/login"]');
+              if(loginForm && !isTrackedLogin) {
+                  const eventData = {
+                    event: self.eventPrefix + 'login'
+                  }
+                  isTrackedLogin = true;
+                  dataLayer.push(eventData);
+                  this.eventConsole(self.eventPrefix + 'login', eventData);
+              }
+            });
+          }
+
+          if(window.location.href.includes('/account/register')) {
+            document.addEventListener('submit', function(e) {
+              const registerForm = e.target.closest('[action="/account"]');
+              if(registerForm && !isTrackedRegister) {
+                  const eventData = {
+                    event: self.eventPrefix + 'sign_up'
+                  }
+                
+                  isTrackedRegister = true;
+                  dataLayer.push(eventData);
+                  this.eventConsole(self.eventPrefix + 'sign_up', eventData);
+              }
+            });
+          }
         }
       } 
       // end Ultimate_Shopify_DataLayer
