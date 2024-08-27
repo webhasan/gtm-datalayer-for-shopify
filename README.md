@@ -45,6 +45,15 @@ With all general event tracking it also tracks following special events
 7. Events was tacked by **Ajax Response** so no data discrepancy for edge cases
 8. No **jQuery**, no **3rd Party Scripet** was included, all code was written ES6 Object Oriented Way. Added proper error handling so that there is no JS error
 
+## Testing ##
+### To test GTM events ###
+1. Method 1: Open https://tagmanager.google.com/ and add your domain to view all GTM Data layer events inside the GTM debugger interface
+2. Method 2: Right clicking on the page, select "Inspect" and click on "Console". Anytime page is interacted with Shopify website i.e Searching on the website then a datalayer event will log inside the console.
+### To test GA4 events ###
+3. Method 1: Open https://analytics.google.com/ then Admin > Data Display > Debug view. Also Install & enable <a href="https://chromewebstore.google.com/detail/google-analytics-debugger/jnkmfdileelhofjcijamephohjechhna" target="_blank">Google analytics debugger</a>.Now all web events should flow into GA4 debugger.
+5. Method 2: You can use "Network" tab in "inspect" window to filter GA4 request with string "Collect?v=2". Now click on most recent network request and then click on "Payload" to view content of that request that was sent to GA4
+
+
 
 For more information, please watch the video below.
 
