@@ -1,7 +1,8 @@
 const event_prefix = '';
 const formattedItemId = true;
+const gclidWithPageLocation = true;
 const GTM_container_url = 'https://www.googletagmanager.com';
-const GTM_container_id = 'GTM-00000';
+const GTM_container_id = 'GTM-00000000';
 
 
 let storeCountryCode = window.localStorage.getItem('shopCountryCode');
@@ -11,6 +12,7 @@ function gtag() {
     dataLayer.push(arguments);
 }
 
+//checkout pages event
 if(/.+\/checkouts?\/.*/.test(window.location.href)) {
     // tag manager 
     (function(w, d, s, l, i) {
@@ -27,13 +29,16 @@ if(/.+\/checkouts?\/.*/.test(window.location.href)) {
         f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', GTM_container_id);
   
-    analytics.subscribe('page_viewed', (event) => {
-        window.dataLayer.push({
+    analytics.subscribe('page_viewed', (event) => {      
+        const eventData = {
           event: event_prefix + 'page_view',
-          page_location: event.context.document.location.href,   
-        });
+          page_location: getPageLocation(event),   
+        }
+      
+        window.dataLayer.push(eventData);
+        eventLog('page_view', eventData);
     });
-    // end tag manger
+    // end tag manager
 
 
     // DataLayer Events
@@ -45,6 +50,34 @@ if(/.+\/checkouts?\/.*/.test(window.location.href)) {
 
 }
 
+
+function eventLog(eventName, eventData) {
+    const css1 = 'background: red; color: #fff; font-size: normal; border-radius: 3px 0 0 3px; padding: 3px 4px;';
+    const css2 = 'background-color: blue; color: #fff; font-size: normal; border-radius: 0 3px 3px 0; padding: 3px 4px;';
+    
+    console.log(
+      '%cGTM DataLayer Event:%c' + event_prefix + eventName, css1, css2, eventData
+    );
+}
+
+function getPageLocation(event) {
+    let pageLocation = event.context.document.location.href;
+  
+    if(gclidWithPageLocation) {
+      const name = '_gcl_aw';
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+
+      if (parts.length === 2) {
+        const gclidCookie = parts.pop().split(';').shift();
+        const gclidParts = gclidCookie.split('.');
+        const gclid = gclidParts[gclidParts.length - 1];
+        
+        pageLocation = pageLocation.includes('?') ? `${pageLocation}&gclid=${gclid}` : `${pageLocation}?gclid=${gclid}`;
+      }
+    }
+  return pageLocation;
+}
 
 async function sha256Hash(value) {
     const encoder = new TextEncoder();
@@ -87,6 +120,7 @@ async function ecommerceDataLayer(gtm_event_name, event) {
 
     const dataLayerInfo = {
         event: event_prefix + gtm_event_name,
+        page_location: getPageLocation(event),
         ecommerce: {
             transaction_id: event.data?.checkout?.order?.id,
             value: event.data?.checkout?.totalPrice?.amount,
@@ -116,11 +150,5 @@ async function ecommerceDataLayer(gtm_event_name, event) {
         ecommerce: null
     });
     dataLayer.push(dataLayerInfo);
-
-    const css1 = 'background: red; color: #fff; font-size: normal; border-radius: 3px 0 0 3px; padding: 3px 4px;';
-    const css2 = 'background-color: blue; color: #fff; font-size: normal; border-radius: 0 3px 3px 0; padding: 3px 4px;';
-    
-    console.log(
-      '%cGTM DataLayer Event:%c' + event_prefix + gtm_event_name, css1, css2, Object.assign({}, dataLayerInfo, customerInfo)
-    );
+    eventLog(gtm_event_name, Object.assign({}, dataLayerInfo, customerInfo));
 }
