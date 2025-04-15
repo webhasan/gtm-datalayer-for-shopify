@@ -3,8 +3,8 @@
   * Author: Md Hasanuzzamna
   * Email: info@leomeasure.com
   * Linkedin: https://linkedin.com/in/md-h
-  * Version: 3.5.0
-  * Last Update: 22 Oct 2024
+  * Version: 3.5.1
+  * Last Update: 15 Apr 2025
   */
   
   (function() {
@@ -213,7 +213,7 @@
                 let cloneResponse = response.clone();
                 let requestURL = arguments[0]['url'] || arguments[0];
                 
-                if(/.*\/search\/?.*\?.*q=.+/.test(requestURL) && !requestURL.includes('&requestFrom=uldt')) {   
+                if(typeof requestURL === 'string' && /.*\/search\/?.*\?.*q=.+/.test(requestURL) && !requestURL.includes('&requestFrom=uldt')) {   
                   const queryString = requestURL.split('?')[1];
                   const urlParams = new URLSearchParams(queryString);
                   const search_term = urlParams.get("q");
@@ -254,7 +254,7 @@
                       });
                   });
                 }
-                else if (requestURL.includes("/cart/add")) {
+                else if (typeof requestURL === 'string' && requestURL.includes("/cart/add")) {
                   cloneResponse.text().then((text) => {
                     let data = JSON.parse(text);
 
@@ -267,7 +267,7 @@
                     }
                     self.updateCart();
                   });
-                }else if(requestURL.includes("/cart/change") || requestURL.includes("/cart/update")) {
+                }else if(typeof requestURL === 'string' && requestURL.includes("/cart/change") || requestURL.includes("/cart/update")) {
                   
                    cloneResponse.text().then((text) => {
                      
@@ -332,13 +332,13 @@
             xhr.send = function() {
     
                 // Only proceed if the request URL matches what we're looking for.
-                if (requestURL.includes("/cart/add") || requestURL.includes("/cart/change") || /.*\/search\/?.*\?.*q=.+/.test(requestURL)) {
+                if (typeof requestURL === 'string' && (requestURL.includes("/cart/add") || requestURL.includes("/cart/change") || /.*\/search\/?.*\?.*q=.+/.test(requestURL))) {
         
                     xhr.addEventListener('load', function() {
                         if (xhr.readyState === 4) {
                             if (xhr.status >= 200 && xhr.status < 400) { 
 
-                              if(/.*\/search\/?.*\?.*q=.+/.test(requestURL) && !requestURL.includes('&requestFrom=uldt')) {
+                              if(typeof requestURL === 'string' && /.*\/search\/?.*\?.*q=.+/.test(requestURL) && !requestURL.includes('&requestFrom=uldt')) {
                                 const queryString = requestURL.split('?')[1];
                                 const urlParams = new URLSearchParams(queryString);
                                 const search_term = urlParams.get("q");
@@ -381,7 +381,7 @@
 
                               }
 
-                              else if(requestURL.includes("/cart/add")) {
+                              else if(typeof requestURL === 'string' && requestURL.includes("/cart/add")) {
                                   const data = JSON.parse(xhr.responseText);
 
                                   if(data.items && Array.isArray(data.items)) {
@@ -393,7 +393,7 @@
                                   }
                                   self.updateCart();
                                  
-                               }else if(requestURL.includes("/cart/change")) {
+                               }else if(typeof requestURL === 'string' && requestURL.includes("/cart/change")) {
                                  
                                   const newCart = JSON.parse(xhr.responseText);
                                   const newCartItems = newCart.items;
