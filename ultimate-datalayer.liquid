@@ -267,7 +267,7 @@
                     }
                     self.updateCart();
                   });
-                }else if(typeof requestURL === 'string' && requestURL.includes("/cart/change") || requestURL.includes("/cart/update")) {
+                }else if(typeof requestURL === 'string' && (requestURL.includes("/cart/change") || requestURL.includes("/cart/update"))) {
                   
                    cloneResponse.text().then((text) => {
                      
