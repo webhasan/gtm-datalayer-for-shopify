@@ -3,12 +3,13 @@
 
 ## How to use: 
 1. Go to theme edit and paste GTM tracking code right after `<head>` tag in `theme.liquid` file
-2. Inside the `snippets` folder create a new file as `ultimate-datalayer`. Copy all of the code from `ultimate-datalayer.liquid` of this repository to sinppet file `ultimate-datalayer.liquid`.
+2. Inside the `snippets` folder create a new file as `ultimate-datalayer`. Copy all of the code from <a href="https://github.com/webhasan/gtm-datalayer-for-shopify/blob/main/ultimate-datalayer.liquid" target="_blank">`ultimate-datalayer.liquid`</a> of this repository to sinppet file `ultimate-datalayer.liquid`.
 3. In the `theme.liquid` file after your GTM tracking code include `ultimate-datalayer.liquid` file as `{% render 'ultimate-datalayer' %}`
-4. From shopify admin dashboard go to **Settings >> Checkout (Scroll Down) >> Additional scripts**. Copy all code from `checkout.liquid` from this repository to the  `Additional scripts` field. Change the example GTM example tracking ID **000-00000** to the real GTM ID
+4. From your Shopify Admin Dashboard, navigate to Settings → Customer events.
+In the top-right corner, click <a href="https://prnt.sc/FYo5izGrmJUw" target="_blank">Add custom pixel</a> to create a new custom pixel. Next, enter <a href="https://prnt.sc/hpEU9KQ3IudC" target="_blank">a title for the pixel</a> and create it. Remove all commented code from the code editor. Then, copy the entire code from the GitHub file <a href="https://github.com/webhasan/gtm-datalayer-for-shopify/blob/main/checkout-webpixel.js" target="_blank">checkout-webpixel.js</a> and <a href="https://prnt.sc/pvuUYeOvqky8" target="_blank">paste it into the code</a> field of your new custom pixel. At the very top of the code, replace the sample GTM Tracking <a href="https://prnt.sc/703lRl6F9_mL" target="_blank">ID GTM-00000000</a> with your actual Google Tag Manager ID. If you’re using server-side tagging with a custom domain, update the <a href="https://prnt.sc/9D2i45a3wVp3" target="_blank">Tag Manager URL</a> to match your website’s subdomain. 
 5. Depending on your Shopify theme, you might have to make some adjustments. For more information, please refer to the video below.
 
-<a href="https://youtu.be/98w-kEKLICQ" target="_blank"><img src="images/play-png.png" width="100"/></a>
+<a href="https://youtu.be/98w-kEKLICQ?t=278" target="_blank"><img src="images/play-png.png" width="100"/></a>
 ### 
 
 
