@@ -1,5 +1,12 @@
 # Ultimate Shopify DataLayer for Google Tag Manager
-**👉 Contact me for support: info@leomeasure.com** 
+**👉 Contact me for support:**
+
+Email: info@leomeasure.com
+
+Whatsapp: <a href="https://api.whatsapp.com/send?phone=8801723770763" target="_blank">+8801723770763</a>
+
+Linkedin: <a href="https://www.linkedin.com/in/md-h/" target="_blank">linkedin.com/in/md-h/</a>
+
 
 ## How to use: 
 1. Go to theme edit and paste GTM tracking code right after `<head>` tag in `theme.liquid` file
