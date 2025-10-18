@@ -17,10 +17,10 @@ Linkedin: <a href="https://www.linkedin.com/in/md-h/" target="_blank">linkedin.c
 4. From your Shopify Admin Dashboard, navigate to Settings → Customer events.
 In the top-right corner, click <a href="https://prnt.sc/FYo5izGrmJUw" target="_blank">Add custom pixel</a> to create a new custom pixel. Next, enter <a href="https://prnt.sc/hpEU9KQ3IudC" target="_blank">a title for the pixel</a> and create it. Remove all commented code from the code editor. Then, copy the entire code from the GitHub file <a href="https://github.com/webhasan/gtm-datalayer-for-shopify/blob/main/checkout-webpixel.js" target="_blank">checkout-webpixel.js</a> and <a href="https://prnt.sc/pvuUYeOvqky8" target="_blank">paste it into the code</a> field of your new custom pixel. At the very top of the code, replace the sample GTM Tracking <a href="https://prnt.sc/703lRl6F9_mL" target="_blank">ID GTM-00000000</a> with your actual Google Tag Manager ID. If you’re using server-side tagging with a custom domain, update the <a href="https://prnt.sc/9D2i45a3wVp3" target="_blank">Tag Manager URL</a> to match your website’s subdomain.
 5. In the Customer privacy settings section - For the Permission option, select Not required – The pixel will always run and for the Data sale option, choose Data collected does not qualify as data sale.
-6. Finally, click connect butto in the top right corner to connect custom pixel.
+6. Finally, click connect button in the top right corner to connect custom pixel.
 7. Depending on your Shopify theme, you might have to make some adjustments. For more information, please refer to the video below.
 
-<a href="https://youtu.be/98w-kEKLICQ?t=278" target="_blank"><img src="images/play-png.png" width="100"/></a>
+<a href="https://leomeasure.com/shopify-datalayer-gtm/" target="_blank"><img src="images/play-png.png" width="100"/></a>
 ### 
 
 
@@ -69,5 +69,5 @@ With all general event tracking it also tracks following special events
 
 For more information, please watch the video below.
 
-<a href="https://youtu.be/98w-kEKLICQ" target="_blank"><img src="images/play-png.png" width="100"/></a>
+<a href="https://leomeasure.com/shopify-datalayer-gtm/" target="_blank"><img src="images/play-png.png" width="100"/></a>
 
