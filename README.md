@@ -3,7 +3,7 @@
 
 <img src="https://gravatar.com/avatar/0361222ec248091e4b3df42291acb1377e41de5762ccb1cfb5588dd8f81d9164?v=1759449621000&size=500&d=initials" width="60"/>
 
-Email: info@leomeasure.com
+📧 Email: hasan@leomeasure.com
 
 Whatsapp: <a href="https://api.whatsapp.com/send?phone=8801723770763" target="_blank">+8801723770763</a>
 
